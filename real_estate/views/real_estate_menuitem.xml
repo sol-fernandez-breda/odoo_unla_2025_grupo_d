@@ -5,6 +5,17 @@
             <menuitem id="menu_real_estate_advertisements" name="Anuncios">
                 <menuitem id="menu_real_estate_properties" action="estate_property_action"/>
             </menuitem>
-        </menuitem>      
+        </menuitem>
+        <menuitem id="menu_real_estate_settings" name="Ajustes" parent="menu_real_estate_root"/>
+        
+        <menuitem id="menu_estate_property_type_action"
+                  name="Tipos de propiedad"
+                  parent="menu_real_estate_settings"
+                  action="estate_property_type_action"/>
+
+        <menuitem id="menu_estate_property_tags"
+                  name="Etiquetas de propiedad"
+                  parent="menu_real_estate_settings"
+                  action="estate_property_tag_action"/>   
     </data>
 </odoo>
