@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="category_inmobiliaria" model="res.groups">
+    <record id="category_inmobiliaria" model="ir.module.category">
         <field name="name">Inmobiliaria</field>
     </record>
 
