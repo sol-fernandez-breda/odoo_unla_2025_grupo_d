@@ -31,6 +31,14 @@
                 <form string="Propiedad">
                     <header>
                         <field name="state" widget="statusbar"/>
+                        <button name="action_cancel"
+                                type="object"
+                                string="Cancelar"
+                                class="btn-warning"/>
+                        <button name="action_mark_sold"
+                                type="object"
+                                string="Marcar como vendida"
+                                class="btn-success"/>
                     </header>
 
                     <sheet>
@@ -49,6 +57,7 @@
                             <group>
                                 <field name="expected_price"/>
                                 <field name="selling_price"/>
+                                <field name="best_offer"/>
                             </group>
                         </group>
 
@@ -67,10 +76,12 @@
                                         <field name="garden_area"/>
                                         <field name="garden_orientation"/>
                                     </group>
+                                    <group>
+                                        <field name="total_area"/>
+                                    </group>
                                 </group>
                             </page>
-                        </notebook>
-                        <notebook>
+                        
                             <page string="Más info">
                                 <group>
                                     <group>
@@ -79,14 +90,20 @@
                                     </group>
                                 </group>
                             </page>
-                        </notebook>
-                        <notebook>
+                        
                             <page string="Ofertas">
                                 <field name="offer_ids">
-                                    <list editable="top">
+                                    <list>
                                         <field name="price"/>
                                         <field name="partner_id"/>
                                         <field name="status"/>
+                                        <field name="validity"/>
+                                        <field name="date_deadline"/>
+                                        <field name="property_type_id"/>
+                                        <button name="action_accept_offer"
+                                            type="object"
+                                            string="Aceptar Oferta"
+                                            class="btn-success"/>
                                     </list>
                                 </field>
                             </page>
