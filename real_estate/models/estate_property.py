@@ -1,5 +1,6 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
+from odoo.exceptions import UserError
 
 class EstateProperty(models.Model):
     _name = "estate.property"
@@ -68,4 +69,51 @@ class EstateProperty(models.Model):
         default="nuevo",
         copy=False
     )
+    
+
+    total_area = fields.Integer(
+        string="Superficie total",
+        compute="_compute_total_area",
+        store=True
+    )
+
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area  + record.garden_area
+
+    best_offer = fields.Float(
+        string="Mejor oferta",
+        compute="_compute_best_offer",
+        store=True
+    )
+    
+    def _compute_best_offer(self):
+        for record in self:
+            offers = record.offer_ids.mapped('price')
+            record.best_offer = max(offers) if offers else 0
+            
+    @api.onchange('garden')
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 10
+        else:
+            self.garden_area = 0
+
+    @api.onchange('expected_price')
+    def _onchange_expected_price(self):
+        if self.expected_price < 10000:
+            raise UserError("El precio ingresado es muy bajo")
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == "vendido":
+                raise UserError("No se puede cancelar una propiedad ya vendida.")
+            record.state = "cancelado"
+
+    def action_mark_sold(self):
+        for record in self:
+            if record.state == "cancelado":
+                raise UserError("No se puede vender una propiedad cancelada.")
+            record.state = "vendido"
     
